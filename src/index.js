@@ -1,9 +1,9 @@
 // import AMapStyle from './amap-style'
 import AMapLoader from '@amap/amap-jsapi-loader'
-import MapContainer from './mapC'
+import MapUpper from './mapC'
 
 
-class MapUpper {
+class MapLoader {
   constructor(amapApiOptions) {
     // 定义初始化状态常量
     this.PENDING = 'pending'// 地图api加载中
@@ -44,11 +44,11 @@ class MapUpper {
       throw Error('jsApi加载出错，请检查！')
     }
     if (this.status === this.FULFILLED) {
-      mapDoneCallback(new MapContainer(options))
+      mapDoneCallback(new MapUpper(options))
     }
     if (this.status === this.PENDING) {
       this.onFulfillInitMaps.push(() => {
-        mapDoneCallback(new MapContainer(options))
+        mapDoneCallback(new MapUpper(options))
       })
     }
   }
@@ -57,7 +57,7 @@ class MapUpper {
 let mapUpperInstance = null
 function load (amapApiOptions) {
   if (!mapUpperInstance) {
-    mapUpperInstance = new MapUpper(amapApiOptions)
+    mapUpperInstance = new MapLoader(amapApiOptions)
   }
   return mapUpperInstance
 }

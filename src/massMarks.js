@@ -1,10 +1,11 @@
-export default function(AMapU) {
-  AMapU.prototype.massMarks = function({
+export default function (AMapU) {
+  AMapU.prototype.massMarks = function ({
     type,
     data,
     initIcon,
     markerStyles = [],
     setLastIcon = true,
+    initGroup = true,
     styleFormatter,
     options = {},
     clickCallback
@@ -31,6 +32,10 @@ export default function(AMapU) {
       }
     });
 
+    if (!initGroup) {
+      return data
+    }
+
     if (!this.massMarksMap) {
       this.massMarksMap = new Map();
     }
@@ -42,15 +47,25 @@ export default function(AMapU) {
     }
     mass = new AMap.MassMarks(data, {
       zIndex: 100,
+      alwaysRender: false,
       ...options,
       style: styles
     });
     mass._u_styles = styles;
+    mass._u_data = data
+    mass._u_massOptions = {
+      type,
+      initIcon,
+      markerStyles,
+      setLastIcon,
+      styleFormatter,
+    }
     clickCallback && mass.on('click', e => {
-      this.oldClickMassData && setLastIcon && (this.oldClickMassData.style = this.oldClickMassData._u_lastStyle);
+      this.oldClickMassData && setLastIcon && (this.oldClickMassData.setIcon(this.oldClickMassData._u_lastIcon))
       e.data.setIcon = (iconName) => {
+
         if (typeof icons[iconName] === 'number') {
-          e.data._u_lastStyle = e.data.style;
+          e.data._u_lastIcon = Object.keys(icons).find(key => icons[key] === e.data.style)
           e.data.style = icons[iconName];
         }
       };
@@ -64,52 +79,55 @@ export default function(AMapU) {
     this.massMarksMap.set(type, mass);
   };
 
-  AMapU.prototype.renderMassMarks = function(type) {
+  AMapU.prototype.renderMassMarks = function (type) {
     const mass = this.massMarksMap.get(type);
     if (mass) {
       mass.setStyle(mass._u_styles);
     }
   };
 
-  AMapU.prototype.getMassMarkersByType = function(type) {
+  AMapU.prototype.getMassMarkersByType = function (type) {
     return (this.massMarksMap && this.massMarksMap.get(type)) || null;
   };
 
-  AMapU.prototype.showMassMarkersByType = function(type) {
-    const overlays = (this.massMarksMap && this.massMarksMap.get(type)) || null;
-    overlays && overlays.show();
-    return overlays;
+  AMapU.prototype.showMassMarkersByType = function (type) {
+    const mass = (this.massMarksMap && this.massMarksMap.get(type)) || null;
+    mass && mass.show();
+    return mass;
   };
 
-  AMapU.prototype.hideMassMarkersByType = function(type) {
-    const overlays = (this.massMarksMap && this.massMarksMap.get(type)) || null;
-    overlays && overlays.hide();
-    return overlays;
+  AMapU.prototype.hideMassMarkersByType = function (type) {
+    const mass = (this.massMarksMap && this.massMarksMap.get(type)) || null;
+    mass && mass.hide();
+    return mass;
   };
 
-  AMapU.prototype.clearMassMarkersByType = function(type) {
-    const overlays = (this.massMarksMap && this.massMarksMap.get(type)) || null;
-    if (overlays) {
-      overlays.setMap(null);
+  AMapU.prototype.clearMassMarkersByType = function (type) {
+    const mass = (this.massMarksMap && this.massMarksMap.get(type)) || null;
+    if (mass) {
+      mass.setMap(null);
       this.massMarksMap.delete(type);
     }
-    return overlays;
+    return mass;
   };
 
-  AMapU.prototype.addMassMarkersByType = function(type, data) {
-    const overlays = (this.massMarksMap && this.massMarksMap.get(type)) || null;
-    if (overlays) {
-      overlays.addOverlays(this.mapMarkers({ ...overlays._u_markersOptions, data }));
+  AMapU.prototype.addMassMarkersByType = function (type, data) {
+    const mass = (this.massMarksMap && this.massMarksMap.get(type)) || null;
+    if (mass) {
+      const options = Object.assign({}, mass._u_massOptions, { initGroup: false, data })
+      data = this.massMarks(options)
+      mass._u_data = mass._u_data.concat(data)
+      mass.setData(mass._u_data)
     } else {
       throw Error('no have this type');
     }
-    return overlays;
+    return mass;
   };
 
-  AMapU.prototype.getMassExtDataByType = function(type) {
-    const overlays = (this.massMarksMap && this.massMarksMap.get(type)) || null;
-    if (overlays) {
-      return overlays._u_data;
+  AMapU.prototype.getMassExtDataByType = function (type) {
+    const mass = (this.massMarksMap && this.massMarksMap.get(type)) || null;
+    if (mass) {
+      return mass._u_data;
     } else {
       throw Error('no have this type');
     }

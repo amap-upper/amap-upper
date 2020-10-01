@@ -1,8 +1,9 @@
 import initTools from './tools';
 import initMapMarkers from './mapMarker';
 import massMarks from './massMarks';
+import markerClusterer from './markerClusterer'
 
-class MapC {
+class MapUpper {
   // eslint-disable-next-line no-useless-constructor
   constructor( options) {
     this.map = null;
@@ -28,8 +29,10 @@ class MapC {
   }
 }
 
-initTools(MapC);
-initMapMarkers(MapC);
-massMarks(MapC);
+initTools(MapUpper);
+initMapMarkers(MapUpper);
+massMarks(MapUpper);
+markerClusterer(MapUpper)
 
-export default MapC;
+
+export default MapUpper;

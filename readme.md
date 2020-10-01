@@ -4,6 +4,7 @@
 ```sh
 git clone git@github.com:amap-upper/amap-upper.git
 cd amap-upper
+npm i
 npm link
 ```
 
