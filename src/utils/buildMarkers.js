@@ -61,3 +61,6 @@ export function _buildMarkers (offset = 0, {
 
   return markers;
 }
+
+
+export default { _buildMarkers }

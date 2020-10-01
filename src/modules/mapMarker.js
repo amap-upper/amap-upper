@@ -1,4 +1,4 @@
-import { _buildMarkers } from "./utils/_buildMarkers"
+import { _buildMarkers } from "../utils/buildMarkers"
 
 export default function (AMapU) {
   AMapU.prototype.mapMarkers = function ({

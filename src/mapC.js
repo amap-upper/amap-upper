@@ -1,10 +1,9 @@
-import initTools from './tools';
-import initMapMarkers from './mapMarker';
-import massMarks from './massMarks';
-import markerClusterer from './markerClusterer'
+import initTools from './modules/tools';
+import initMapMarkers from './modules/mapMarker';
+import massMarks from './modules/massMarks';
+import markerClusterer from './modules/markerClusterer'
 
 class MapUpper {
-  // eslint-disable-next-line no-useless-constructor
   constructor( options) {
     this.map = null;
     this.initMap(options);
