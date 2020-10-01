@@ -1,4 +1,3 @@
-/* eslint-disable */
 // import AMapStyle from './amap-style'
 import AMapLoader from '@amap/amap-jsapi-loader'
 import MapContainer from './mapC'
