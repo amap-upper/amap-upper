@@ -1,8 +1,8 @@
-import commonjs from 'rollup-plugin-commonjs'
-import nodeResolve from 'rollup-plugin-node-resolve'
-import babel from 'rollup-plugin-babel'
+import commonjs from 'rollup-plugin-commonjs';
+import nodeResolve from 'rollup-plugin-node-resolve';
+import babel from 'rollup-plugin-babel';
 import requireContext from 'rollup-plugin-require-context';
-import { terser } from "rollup-plugin-terser";
+import { terser } from 'rollup-plugin-terser';
 
 /* format:
   cjs: node.js 环境
@@ -11,11 +11,11 @@ import { terser } from "rollup-plugin-terser";
  */
 export default {
   input: 'src/index.js',
-  format: 'umd', //我们的类库既能被nodejs直接使用，又能在浏览器中使用，那么我们就使用umd的配置项
+  format: 'umd', // 我们的类库既能被nodejs直接使用，又能在浏览器中使用，那么我们就使用umd的配置项
   output: {
     name: 'amapUpper',
     file: 'dist/amapUpper.js',
-    format: 'umd',
+    format: 'umd'
   },
   // external: ['@amap/amap-jsapi-loader'],
   plugins: [
@@ -26,6 +26,6 @@ export default {
       runtimeHelpers: true
     }),
     requireContext(),
-    commonjs(),
+    commonjs()
   ]
-}
+};

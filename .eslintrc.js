@@ -15,6 +15,6 @@ module.exports = {
     AMap: false, // false 不允许被重写
   },
   parser: 'babel-eslint',
-  // extends: ['elemefe']
+  extends: ['elemefe']
 
 };

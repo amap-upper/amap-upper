@@ -1,7 +1,7 @@
-import { _buildMarkers } from "../utils/buildMarkers"
+import { _buildMarkers } from '../utils/buildMarkers';
 
-export default function (AMapU) {
-  AMapU.prototype.mapMarkers = function ({
+export default function(AMapU) {
+  AMapU.prototype.mapMarkers = function({
     type,
     data,
     markerStyles = {},
@@ -35,10 +35,8 @@ export default function (AMapU) {
       this.mapMarkersMap.set(type, OverlayGroup);
     }
 
-
     OverlayGroup.clearOverlays();
     OverlayGroup._u_data = data;
-
 
     const markers = _buildMarkers.call(this, 0, ...arguments);
 
@@ -47,28 +45,28 @@ export default function (AMapU) {
     return markers;
   };
 
-  AMapU.prototype.inactiveLastMarker = function () {
+  AMapU.prototype.inactiveLastMarker = function() {
     this.oldClickMarker && this.oldClickMarker.setIcon(this.oldClickMarker.lastIcon);
     this.oldClickMarker = null;
   };
 
-  AMapU.prototype.getMapMarkersByType = function (type) {
+  AMapU.prototype.getMapMarkersByType = function(type) {
     return (this.mapMarkersMap && this.mapMarkersMap.get(type)) || null;
   };
 
-  AMapU.prototype.showMapMarkersByType = function (type) {
+  AMapU.prototype.showMapMarkersByType = function(type) {
     const overlays = (this.mapMarkersMap && this.mapMarkersMap.get(type)) || null;
     overlays && overlays.show();
     return overlays;
   };
 
-  AMapU.prototype.hideMapMarkersByType = function (type) {
+  AMapU.prototype.hideMapMarkersByType = function(type) {
     const overlays = (this.mapMarkersMap && this.mapMarkersMap.get(type)) || null;
     overlays && overlays.hide();
     return overlays;
   };
 
-  AMapU.prototype.clearMapMarkersByType = function (type) {
+  AMapU.prototype.clearMapMarkersByType = function(type) {
     const overlays = (this.mapMarkersMap && this.mapMarkersMap.get(type)) || null;
     if (overlays) {
       overlays.setMap(null);
@@ -77,19 +75,19 @@ export default function (AMapU) {
     return overlays;
   };
 
-  AMapU.prototype.addMapMarkersByType = function (type, data) {
+  AMapU.prototype.addMapMarkersByType = function(type, data) {
     const overlays = (this.mapMarkersMap && this.mapMarkersMap.get(type)) || null;
     if (overlays) {
-      const markers = _buildMarkers.call(this, overlays._u_data.length, { ...overlays._u_markersOptions, data })
+      const markers = _buildMarkers.call(this, overlays._u_data.length, { ...overlays._u_markersOptions, data });
       overlays.addOverlays(markers);
-      overlays._u_data = overlays._u_data.concat(data)
+      overlays._u_data = overlays._u_data.concat(data);
     } else {
       throw Error('no have this type');
     }
     return overlays;
   };
 
-  AMapU.prototype.getMarkerExtDataByType = function (type) {
+  AMapU.prototype.getMarkerExtDataByType = function(type) {
     const overlays = (this.mapMarkersMap && this.mapMarkersMap.get(type)) || null;
     if (overlays) {
       return overlays._u_data;

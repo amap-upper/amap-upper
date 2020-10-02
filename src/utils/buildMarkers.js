@@ -1,4 +1,4 @@
-export function _buildMarkers (offset = 0, {
+export function _buildMarkers(offset = 0, {
   data,
   markerStyles = [],
   setLastIcon = true,
@@ -62,5 +62,4 @@ export function _buildMarkers (offset = 0, {
   return markers;
 }
 
-
-export default { _buildMarkers }
+export default { _buildMarkers };

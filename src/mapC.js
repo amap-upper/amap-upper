@@ -1,10 +1,10 @@
 import initTools from './modules/tools';
 import initMapMarkers from './modules/mapMarker';
 import massMarks from './modules/massMarks';
-import markerClusterer from './modules/markerClusterer'
+import markerClusterer from './modules/markerClusterer';
 
 class MapUpper {
-  constructor( options) {
+  constructor(options) {
     this.map = null;
     this.initMap(options);
   }
@@ -31,7 +31,6 @@ class MapUpper {
 initTools(MapUpper);
 initMapMarkers(MapUpper);
 massMarks(MapUpper);
-markerClusterer(MapUpper)
-
+markerClusterer(MapUpper);
 
 export default MapUpper;

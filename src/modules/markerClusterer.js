@@ -1,7 +1,7 @@
-import { _buildMarkers } from "../utils/buildMarkers"
+import { _buildMarkers } from '../utils/buildMarkers';
 
-export default function (AMapU) {
-  AMapU.prototype.markerClusterer = function ({
+export default function(AMapU) {
+  AMapU.prototype.markerClusterer = function({
     type,
     data,
     markerStyles = [],
@@ -23,7 +23,7 @@ export default function (AMapU) {
         styles: clusterStyles,
         minClusterSize: 5,
         ...clusterOption
-      })
+      });
 
       cluster._u_data = [];
       cluster._u_markersOptions = {
@@ -40,15 +40,14 @@ export default function (AMapU) {
 
     cluster._u_data = data;
     const markers = _buildMarkers.call(this, 0, ...arguments);
-    cluster.setMarkers(markers)
-  }
+    cluster.setMarkers(markers);
+  };
 
-
-  AMapU.prototype.getMarkerClustererByType = function (type) {
+  AMapU.prototype.getMarkerClustererByType = function(type) {
     return (this.clusterMarkersMap && this.clusterMarkersMap.get(type)) || null;
   };
 
-  AMapU.prototype.clearMarkerClustererByType = function (type) {
+  AMapU.prototype.clearMarkerClustererByType = function(type) {
     const cluster = (this.clusterMarkersMap && this.clusterMarkersMap.get(type)) || null;
     if (cluster) {
       cluster.setMap(null);
@@ -57,18 +56,18 @@ export default function (AMapU) {
     return cluster;
   };
 
-  AMapU.prototype.addMarkerClustererByType = function (type, data) {
+  AMapU.prototype.addMarkerClustererByType = function(type, data) {
     const cluster = (this.clusterMarkersMap && this.clusterMarkersMap.get(type)) || null;
     if (cluster) {
-      const markers = _buildMarkers.call(this, cluster._u_data.length, { ...cluster._u_markersOptions, data })
-      cluster.addMarkers(markers)
+      const markers = _buildMarkers.call(this, cluster._u_data.length, { ...cluster._u_markersOptions, data });
+      cluster.addMarkers(markers);
     } else {
       throw Error('no have this type');
     }
     return cluster;
   };
 
-  AMapU.prototype.getClusterExtDataByType = function (type) {
+  AMapU.prototype.getClusterExtDataByType = function(type) {
     const cluster = (this.clusterMarkersMap && this.clusterMarkersMap.get(type)) || null;
     if (cluster) {
       return cluster._u_data;
