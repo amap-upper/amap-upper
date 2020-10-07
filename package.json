@@ -10,7 +10,8 @@
   "author": "",
   "license": "MIT",
   "dependencies": {
-    "@amap/amap-jsapi-loader": "0.0.4"
+    "@amap/amap-jsapi-loader": "0.0.4",
+    "gcoord": "^0.2.3"
   },
   "devDependencies": {
     "@babel/core": "^7.11.6",
