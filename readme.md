@@ -1,44 +1,40 @@
-#### 开发
-
-克隆仓库后，执行命令，创建软连接
+#### 安装
+----------------------
 
 ```sh
-git clone git@github.com:amap-upper/amap-upper.git
-cd amap-upper
-npm i
+npm i -S amap-upper
 ```
 
-修改`package.json`中`main`为`./src/index.js`
+#### 快速上手
 
 运行
-```sh
-npm link
-```
-
-在测试项目中
-```sh
-cd test-project
-npm link amap-upper
-```
-
-
-#### usage
-main.js
 ```javascript
 import amapUpper from 'amap-upper'
 
 amapUpper.load({
-  key: 'e449*************8be8', // 申请好的Web端开发者Key，首次调用 load 时必填
-  ..options  
-}).initMap(options, mapC => {})
+  key: 'e4493da******************e4a98be8', // 申请好的Web端开发者Key，首次调用 load 时必填
+  version: '1.4.15', // 指定要加载的 JSAPI 的版本，缺省时默认为 1.4.15
+  plugins: ['AMap.Geocoder', 'AMap.PolyEditor', 'AMap.MarkerClusterer', 'AMap.MouseTool', 'AMap.Autocomplete', 'AMap.PlaceSearch'],
+  AMapUI: { // 是否加载 AMapUI，缺省不加载
+    version: '1.1', // AMapUI 缺省 1.1
+    plugins: [] // 需要加载的 AMapUI ui插件
+  }
+})
 
-amapUpper.initMap(...)
-amapUpper.initMap(...)
-amapUpper.initMap(...)
+amapUpper.initMap(
+{ target: this.$refs.app },
+mapU => {
+  mapU.markerClusterer(options)
+  mapU.massMarks(options)
+  mapU.mapMarkers(options)
+  ...
+})
 ```
 
+#### 地址
 
-#### build
-```sh
-npm run rollup
-```
+[amap-upper API文档地址]()
+[amap-upper github地址](https://github.com/amap-upper/amap-upper)
+
+#### 
+
