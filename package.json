@@ -2,7 +2,7 @@
   "name": "amap-upper",
   "version": "0.0.0",
   "description": "基于高德地图的业务类",
-  "main": "./dist/amapUpper.js",
+  "main": "./src/index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "rollup": "rollup -c"

@@ -1,6 +1,6 @@
 // import AMapStyle from './amap-style'
 import AMapLoader from '@amap/amap-jsapi-loader';
-import MapUpper from './mapC';
+import MapUpper from './mapU';
 
 class MapLoader {
   constructor(amapApiOptions) {
