@@ -33,8 +33,10 @@ function drawEditor(AMapU) {
       });
       this.lastMouseDrawPolys = [];
     }
-    const hasType = ['polyline', 'polygon', 'circle', 'rectangle', 'marker'].includes(type);
-    if (!hasType) { throw new Error("type is required and in ['polyline', 'polygon', 'circle']"); }
+    const hasType = ['polyline', 'polygon', 'circle', 'rectangle', 'marker', 'rule', 'measureArea', 'rectZoomIn', 'rectZoomOut'].includes(type);
+    if (!hasType) {
+      throw Error("type is required and in 'polyline', 'polygon', 'circle', 'rectangle', 'marker', 'rule', 'measureArea', 'rectZoomIn', 'rectZoomOut'");
+    }
     this.mouseTool = new AMap.MouseTool(this.map);
 
     this.mouseTool.on('draw', function({ obj }) {
