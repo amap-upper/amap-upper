@@ -62,6 +62,34 @@ function initTools(AMapU) {
     }
     return gcoord.transform(lnglat, ...transformSourceAndTo.map(key => gcoord[key]));
   };
+
+  AMapU.prototype.setCenter = function(lnglat, zoom = this.map.getZoom()) {
+    this.map.setZoomAndCenter(zoom, lnglat);
+  };
+
+  AMapU.prototype.setLocation = function(
+    [longitude, latitude],
+    {
+      toCenter = true,
+      markerOptions
+    } = {}
+  ) {
+    this.clearLocation();
+
+    this.localtionMarker = new AMap.Marker({
+      position: new AMap.LngLat(longitude, latitude),
+      ...markerOptions
+    });
+    this.localtionMarker.setMap(this.map);
+    if (toCenter) {
+      this.setCenter([longitude, latitude]);
+    }
+  };
+
+  AMapU.prototype.clearLocation = function() {
+    this.localtionMarker && this.localtionMarker.setMap(null);
+    this.localtionMarker = null;
+  };
 }
 
 export default initTools;
