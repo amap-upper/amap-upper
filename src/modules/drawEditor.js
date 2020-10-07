@@ -12,22 +12,40 @@ function drawEditor(AMapU) {
     zIndex: 50
   };
 
+  let mouseing = false;
   AMapU.prototype.mouseToolDraw = function(
     {
       type,
       styleOption = {},
+      clearLast = false,
       clearPoly,
       callback
     }
   ) {
-    // this.mouseTool && this.mouseTool.close(true);
+    if (mouseing) {
+      console.error('wait this mouse done');
+      return;
+    }
+    mouseing = true;
+    if (clearLast) {
+      this.lastMouseDrawPolys && this.lastMouseDrawPolys.forEach(last=>{
+        last && last.setMap(null);
+      });
+      this.lastMouseDrawPolys = [];
+    }
     const hasType = ['polyline', 'polygon', 'circle', 'rectangle', 'marker'].includes(type);
     if (!hasType) { throw new Error("type is required and in ['polyline', 'polygon', 'circle']"); }
     this.mouseTool = new AMap.MouseTool(this.map);
 
     this.mouseTool.on('draw', function({ obj }) {
+      mouseing = false;
       // 是否保留覆盖物实例
       this.mouseTool && this.mouseTool.close(!!clearPoly);
+      if (!clearPoly) {
+        this.lastMouseDrawPolys
+          ? this.lastMouseDrawPolys.push(obj)
+          : this.lastMouseDrawPolys = [obj];
+      }
       // 把画出的实例作为参数
       callback && callback(obj);
     }.bind(this));
@@ -38,16 +56,19 @@ function drawEditor(AMapU) {
     });
   };
 
+  let editing = false;
   AMapU.prototype.newPolyEditor = function({
     type,
     path,
     clearLast = true,
     styleOption = {},
-    startEditorCallback,
-    addNodeCallback,
-    adjustCallback,
-    endCallback
+    editorStartCallback
   }) {
+    if (editing) {
+      console.error('wait this editor done');
+      return;
+    }
+    editing = true;
     // 结束编辑事件
     this.polyEditor && this.polyEditor.close();
     if (clearLast) {
@@ -58,7 +79,9 @@ function drawEditor(AMapU) {
     }
 
     const fn = (poly) => {
-      this.lastEditorPolys.push(poly);
+      this.lastEditorPolys
+        ? this.lastEditorPolys.push(poly)
+        : this.lastEditorPolys = [poly];
       poly.setMap(this.map);
 
       // 缩放地图到合适的视野级别
@@ -66,22 +89,14 @@ function drawEditor(AMapU) {
       // 初始化编辑器
       this.polyEditor = new AMap.PolyEditor(this.map, poly);
 
-      //  添加节点事件
-      this.polyEditor.on('addnode', function(event) {
-        addNodeCallback && addNodeCallback(event);
-      });
-      // 节点改变事件
-      this.polyEditor.on('adjust', function(event) {
-        adjustCallback && adjustCallback(event);
-      });
-      // 结束编辑事件
-      this.polyEditor.on('end', function(event) {
-        endCallback && endCallback(event);
-      // event.target 即为编辑后的折线对象
-      });
+      const end = ()=>{
+        editing = false;
+        this.polyEditor.off('end', end);
+      };
+      this.polyEditor.on('end', end);
 
       this.polyEditor.open();
-      startEditorCallback && startEditorCallback(this.polyEditor);
+      editorStartCallback && editorStartCallback(this.polyEditor);
     };
 
     if (path) {
@@ -101,7 +116,7 @@ function drawEditor(AMapU) {
       }
       fn(poly);
     } else {
-      this.mouseToolDraw({type, styleOption, clearPoly: false, callback: fn});
+      this.mouseToolDraw({type, styleOption, clearPoly: true, callback: fn});
     }
   };
 }
