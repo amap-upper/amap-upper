@@ -1,6 +1,6 @@
 {
   "name": "amap-upper",
-  "version": "0.0.0",
+  "version": "0.0.1",
   "description": "基于高德地图的业务类",
   "main": "lib/amapUpper.js",
   "scripts": {
