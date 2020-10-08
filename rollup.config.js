@@ -14,7 +14,7 @@ export default {
   format: 'umd', // 我们的类库既能被nodejs直接使用，又能在浏览器中使用，那么我们就使用umd的配置项
   output: {
     name: 'amapUpper',
-    file: 'dist/amapUpper.js',
+    file: 'lib/amapUpper.js',
     format: 'umd'
   },
   // external: ['@amap/amap-jsapi-loader'],
