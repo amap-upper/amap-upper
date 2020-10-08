@@ -47,6 +47,26 @@ export default function(AMapU) {
     return (this.clusterMarkersMap && this.clusterMarkersMap.get(type)) || null;
   };
 
+  AMapU.prototype.hideMarkerClustererByType = function(type) {
+    const cluster = (this.clusterMarkersMap && this.clusterMarkersMap.get(type)) || null;
+    if (cluster) {
+      cluster.setMap(null);
+    } else {
+      throw Error('no have this type');
+    }
+    return cluster;
+  };
+
+  AMapU.prototype.showMarkerClustererByType = function(type) {
+    const cluster = (this.clusterMarkersMap && this.clusterMarkersMap.get(type)) || null;
+    if (cluster) {
+      cluster.setMap(this.map);
+    } else {
+      throw Error('no have this type');
+    }
+    return cluster;
+  };
+
   AMapU.prototype.clearMarkerClustererByType = function(type) {
     const cluster = (this.clusterMarkersMap && this.clusterMarkersMap.get(type)) || null;
     if (cluster) {

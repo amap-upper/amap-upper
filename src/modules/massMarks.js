@@ -79,30 +79,30 @@ export default function(AMapU) {
     this.massMarksMap.set(type, mass);
   };
 
-  AMapU.prototype.renderMassMarks = function(type) {
+  AMapU.prototype.renderMassMarksByType = function(type) {
     const mass = this.massMarksMap.get(type);
     if (mass) {
       mass.setStyle(mass._u_styles);
     }
   };
 
-  AMapU.prototype.getMassMarkersByType = function(type) {
+  AMapU.prototype.getMassMarksByType = function(type) {
     return (this.massMarksMap && this.massMarksMap.get(type)) || null;
   };
 
-  AMapU.prototype.showMassMarkersByType = function(type) {
+  AMapU.prototype.showMassMarksByType = function(type) {
     const mass = (this.massMarksMap && this.massMarksMap.get(type)) || null;
     mass && mass.show();
     return mass;
   };
 
-  AMapU.prototype.hideMassMarkersByType = function(type) {
+  AMapU.prototype.hideMassMarksByType = function(type) {
     const mass = (this.massMarksMap && this.massMarksMap.get(type)) || null;
     mass && mass.hide();
     return mass;
   };
 
-  AMapU.prototype.clearMassMarkersByType = function(type) {
+  AMapU.prototype.clearMassMarksByType = function(type) {
     const mass = (this.massMarksMap && this.massMarksMap.get(type)) || null;
     if (mass) {
       mass.setMap(null);
@@ -111,7 +111,7 @@ export default function(AMapU) {
     return mass;
   };
 
-  AMapU.prototype.addMassMarkersByType = function(type, data) {
+  AMapU.prototype.addMassMarksByType = function(type, data) {
     const mass = (this.massMarksMap && this.massMarksMap.get(type)) || null;
     if (mass) {
       const options = Object.assign({}, mass._u_massOptions, { initGroup: false, data });
@@ -131,5 +131,10 @@ export default function(AMapU) {
     } else {
       throw Error('no have this type');
     }
+  };
+
+  AMapU.prototype.inactiveLastMassMarks = function() {
+    this.oldClickMassData && this.oldClickMassData.setIcon && (this.oldClickMassData.setIcon(this.oldClickMassData._u_lastIcon));
+    this.oldClickMassData = null;
   };
 }

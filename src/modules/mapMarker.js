@@ -5,7 +5,6 @@ export default function(AMapU) {
     type,
     data,
     markerStyles = {},
-    initGroup = true,
     setLastIcon = true,
     initIcon,
     markerOpt = {},
@@ -43,11 +42,6 @@ export default function(AMapU) {
     OverlayGroup.setMap(this.map);
     OverlayGroup.addOverlays(markers);
     return markers;
-  };
-
-  AMapU.prototype.inactiveLastMarker = function() {
-    this.oldClickMarker && this.oldClickMarker.setIcon(this.oldClickMarker.lastIcon);
-    this.oldClickMarker = null;
   };
 
   AMapU.prototype.getMapMarkersByType = function(type) {
@@ -94,5 +88,10 @@ export default function(AMapU) {
     } else {
       throw Error('no have this type');
     }
+  };
+
+  AMapU.prototype.inactiveLastMarker = function() {
+    this.oldClickMarker && this.oldClickMarker.setIcon(this.oldClickMarker.lastIcon);
+    this.oldClickMarker = null;
   };
 }
