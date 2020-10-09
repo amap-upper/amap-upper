@@ -3,7 +3,7 @@ import AMapLoader from '@amap/amap-jsapi-loader';
 import MapUpper from './mapU';
 
 class MapLoader {
-  constructor(amapApiOptions) {
+  constructor(loaderOptions) {
     // 定义初始化状态常量
     this.PENDING = 'pending';// 地图api加载中
     this.FULFILLED = 'fulfilled';// 地图API加载成功
@@ -24,7 +24,7 @@ class MapLoader {
       // }
     };
 
-    const options = Object.assign({}, _options, amapApiOptions);
+    const options = Object.assign({}, _options, loaderOptions);
 
     if (!options.key) {
       throw Error('key has not be fount.');
@@ -52,19 +52,19 @@ class MapLoader {
   }
 }
 
-let mapUpperInstance = null;
-function load(amapApiOptions) {
-  if (!mapUpperInstance) {
-    mapUpperInstance = new MapLoader(amapApiOptions);
+let mapLoaderInstance = null;
+function load(loaderOptions) {
+  if (!mapLoaderInstance) {
+    mapLoaderInstance = new MapLoader(loaderOptions);
   }
-  return mapUpperInstance;
+  return mapLoaderInstance;
 }
 
 function initMap(options, mapDoneCallback) {
-  if (!mapUpperInstance) {
+  if (!mapLoaderInstance) {
     throw Error('You must execute load before executing initMap');
   }
-  mapUpperInstance.initMap(options, mapDoneCallback);
+  mapLoaderInstance.initMap(options, mapDoneCallback);
 
 }
 
