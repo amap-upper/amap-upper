@@ -1,6 +1,7 @@
 // import AMapStyle from './amap-style'
 import AMapLoader from '@amap/amap-jsapi-loader';
 import MapUpper from './mapU';
+import { isObject } from './utils/index';
 
 class MapLoader {
   constructor(loaderOptions) {
@@ -15,7 +16,7 @@ class MapLoader {
     this.onFulfillInitMaps = [];
 
     const _options = {
-      // key: 'e4493da5c834ae788f61df36e4a98be8', // 申请好的Web端开发者Key，首次调用 load 时必填
+      // key: 'e4493da5**********6e4a98be8', // 申请好的Web端开发者Key，首次调用 load 时必填
       version: '1.4.15', // 指定要加载的 JSAPI 的版本，缺省时默认为 1.4.15
       plugins: ['AMap.Geocoder', 'AMap.PolyEditor', 'AMap.MarkerClusterer', 'AMap.MouseTool', 'AMap.Autocomplete', 'AMap.PlaceSearch'] // 需要使用的的插件列表，如比例尺'AMap.Scale'等
       // AMapUI: { // 是否加载 AMapUI，缺省不加载
@@ -65,7 +66,32 @@ function initMap(options, mapDoneCallback) {
     throw Error('You must execute load before executing initMap');
   }
   mapLoaderInstance.initMap(options, mapDoneCallback);
-
 }
 
-export default { load, initMap };
+function hasFunction(declaration) {
+  return Object.hasOwnProperty.call(MapUpper.prototype, declaration);
+}
+
+function install(plugin) {
+  if (!isObject(plugin)) {
+    throw Error('plugin must be a Object!');
+  }
+
+  const functionDeclarations = Object.keys(plugin);
+
+  if (!functionDeclarations.length) {
+    console.warn('no function installed to amap-upper!');
+  }
+
+  for (let i = 0; i < functionDeclarations.length; i++) {
+    const declaration = functionDeclarations[i];
+    if (hasFunction(declaration)) {
+      console.error(`The current function [ ${declaration} ] is already occupied, and the method will be ignored.`);
+      continue;
+    }
+
+    MapUpper.prototype[declaration] = functionDeclarations[declaration];
+  }
+
+}
+export default { load, initMap, install };

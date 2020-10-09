@@ -10,6 +10,7 @@ module.exports = {
   },
   rules: {
     'no-console': 'off',
+    'eqeqeq': 'off'
   },
   "globals": {
     AMap: false, // false 不允许被重写
