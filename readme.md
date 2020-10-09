@@ -39,7 +39,7 @@ mapU => {
 
 
 
-## 贡献者
+<!-- ## 贡献者
 
 这个项目的存在要感谢所有贡献者。
 
@@ -47,9 +47,9 @@ mapU => {
 
 感谢所有支持者！ 🙏
 
-<a href="https://github.com/actualchao" target="_blank"><img style="width:64px;height:64px;border-radius: 50%!important;" src="https://avatars3.githubusercontent.com/u/49225266?s=460&u=729889a1ac578df6f14dc5d34edee1dc53dcf656&v=4"></a>
+<a href="https://github.com/actualchao" target="_blank"><img style="width:64px;height:64px;border-radius: 50% !important;" src="https://avatars3.githubusercontent.com/u/49225266?s=460&u=729889a1ac578df6f14dc5d34edee1dc53dcf656&v=4"></a>
 
-<a href="https://github.com/lmh0506" target="_blank"><img style="width:64px;height:64px;border-radius: 50%!important;"src="https://avatars1.githubusercontent.com/u/24320015?s=460&v=4"></a>
+<a href="https://github.com/lmh0506" target="_blank"><img style="width:64px;height:64px;border-radius: 50%!important;" src="https://avatars1.githubusercontent.com/u/24320015?s=460&v=4"></a> -->
 
 ## License
 
