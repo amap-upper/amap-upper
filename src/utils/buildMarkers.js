@@ -1,8 +1,8 @@
 export function _buildMarkers(offset = 0, {
   data,
   markerStyles = [],
-  setLastIcon = true,
   initIcon,
+  setLastIcon = true,
   markerOpt = {},
   markerFormatter,
   clickCallback
@@ -32,7 +32,6 @@ export function _buildMarkers(offset = 0, {
       ...opt
     });
 
-    marker._u_key = item.key || marker._amap_id;
     marker._u_dataIndex = index + offset;
 
     marker._u_setIcon = marker.setIcon;
@@ -46,14 +45,16 @@ export function _buildMarkers(offset = 0, {
       } else {
         icon = iconName;
       }
-      marker.lastIcon = marker.getIcon();
+      marker._u_lastIcon = marker.getIcon();
       marker._u_setIcon(icon);
     };
 
     clickCallback && marker.on('click', e => {
-      this.oldClickMarker && setLastIcon && this.oldClickMarker.setIcon(this.oldClickMarker.lastIcon);
-      this.oldClickMarker = e.target;
+      this.oldClickMarker && setLastIcon && this.oldClickMarker.setIcon(this.oldClickMarker._u_lastIcon);
+
       clickCallback(e, this.oldClickMarker, icons);
+
+      this.oldClickMarker = e.target;
     });
 
     return marker;

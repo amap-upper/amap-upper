@@ -41,7 +41,7 @@ export default function(AMapU) {
 
     OverlayGroup.setMap(this.map);
     OverlayGroup.addOverlays(markers);
-    return markers;
+    return OverlayGroup;
   };
 
   AMapU.prototype.getMapMarkersByType = function(type) {

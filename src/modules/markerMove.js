@@ -1,6 +1,5 @@
 
 function moveGroup(AMapU) {
-  // 巡航器
   AMapU.prototype.markerMove = function({
     type,
     path = [],

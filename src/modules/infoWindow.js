@@ -5,7 +5,8 @@ function infoWindow(AMapU) {
     latitude,
     offset,
     closeWhenClickMap = true,
-    closeCallback
+    closeCallback,
+    infoWindowOpt
   }) {
     const position = new AMap.LngLat(longitude, latitude);
     if (this.infoWindow) {
@@ -19,23 +20,26 @@ function infoWindow(AMapU) {
         position,
         autoMove: true,
         closeWhenClickMap: closeWhenClickMap,
-        offset: new AMap.Pixel(offset[0], offset[1])
+        offset: new AMap.Pixel(offset[0], offset[1]),
+        ...infoWindowOpt
       });
     }
     // 清除上一次的关闭回调
-    this.infoWindow._oldCallback && this.infoWindow.off('close', this.infoWindow._oldCallback);
+    this.infoWindow._u_oldCallback && this.infoWindow.off('close', this.infoWindow._u_oldCallback);
     // 将关闭回调保存下来
-    this.infoWindow._oldCallback = closeCallback;
+    this.infoWindow._u_oldCallback = closeCallback;
     closeCallback && this.infoWindow.on('close', closeCallback);
 
     this.infoWindow.open(this.map, position);
+
+    return this.infoWindow;
   };
 
   AMapU.prototype.clearInfoWindow = function() {
     if (this.infoWindow) {
       this.infoWindow.close();
       // 清除上一次的关闭回调
-      this.infoWindow._oldCallback && this.infoWindow.off('close', this.infoWindow._oldCallback);
+      this.infoWindow._u_oldCallback && this.infoWindow.off('close', this.infoWindow._u_oldCallback);
     }
   };
 }

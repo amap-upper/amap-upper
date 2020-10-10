@@ -25,7 +25,7 @@ export default function(AMapU) {
     data.forEach((dataItem, dataIndex) => {
       dataItem.style = icons[initIcon] || 0;
       if (styleFormatter) {
-        const iconName = styleFormatter(dataItem, dataIndex);
+        const iconName = styleFormatter(dataItem, dataIndex, icons);
         if (typeof icons[iconName] === 'number') {
           dataItem.style = icons[iconName];
         }
@@ -69,14 +69,17 @@ export default function(AMapU) {
           e.data.style = icons[iconName];
         }
       };
+      clickCallback(e, this.oldClickMassData, icons);
+
       this.oldClickMassData = e.data;
-      clickCallback(e, icons);
       setTimeout(() => {
         this.renderMassMarks(type);
       });
     });
     mass.setMap(this.map);
     this.massMarksMap.set(type, mass);
+
+    return mass;
   };
 
   AMapU.prototype.renderMassMarksByType = function(type) {
@@ -84,6 +87,7 @@ export default function(AMapU) {
     if (mass) {
       mass.setStyle(mass._u_styles);
     }
+    return mass;
   };
 
   AMapU.prototype.getMassMarksByType = function(type) {
