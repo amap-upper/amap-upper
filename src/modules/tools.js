@@ -45,7 +45,7 @@ function initTools(AMapU) {
   /**
    * 转换经纬度
    * @param {Array} lnglat 经纬度
-   * @param {Any} source 如果是坐标系，则作为源坐标系，目标坐标系取后一个实参，或者预设的高德坐标系////如果不是坐标系，则转换为boolean，如果true 则使用预设源WGS84，目标AMap,如果false，则反转
+   * @param {Any} source 如果是坐标系，则作为源坐标系，目标坐标系取后一个实参，或者预设的高德坐标系////如果不是坐标系，则转换为boolean，如果不传 则使用预设源WGS84，目标AMap,如果传true，则反转
    */
   AMapU.prototype.transformCoord = function(lnglat, source) {
     const _SOURCE = 'WGS84';
@@ -58,7 +58,7 @@ function initTools(AMapU) {
       target = target[0] && Object.hasOwnProperty.call(gcoord, target[0]) ? target[0] : _TARGET;
       transformSourceAndTo = [source, target];
     } else {
-      !source && transformSourceAndTo.reverse();
+      source && transformSourceAndTo.reverse();
     }
     return gcoord.transform(lnglat, ...transformSourceAndTo.map(key => gcoord[key]));
   };

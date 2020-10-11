@@ -18,7 +18,7 @@ function drawEditor(AMapU) {
       type,
       styleOption = {},
       clearLast = false,
-      clearPoly,
+      clearPoly = false,
       callback
     }
   ) {
@@ -58,19 +58,20 @@ function drawEditor(AMapU) {
     });
   };
 
-  let editing = false;
+  // let editing = false;
   AMapU.prototype.newPolyEditor = function({
     type,
     path,
     clearLast = true,
     styleOption = {},
-    editorStartCallback
+    editorStartCallback,
+    editorEndCallback
   }) {
-    if (editing) {
-      console.error('wait this editor done');
-      return;
-    }
-    editing = true;
+    // if (editing) {
+    //   console.error('wait this editor done');
+    //   return;
+    // }
+    // editing = true;
     // 结束编辑事件
     this.polyEditor && this.polyEditor.close();
     if (clearLast) {
@@ -91,8 +92,9 @@ function drawEditor(AMapU) {
       // 初始化编辑器
       this.polyEditor = new AMap.PolyEditor(this.map, poly);
 
-      const end = ()=>{
-        editing = false;
+      const end = (type, target)=>{
+        // editing = false;
+        editorEndCallback && editorEndCallback(type, target);
         this.polyEditor.off('end', end);
       };
       this.polyEditor.on('end', end);

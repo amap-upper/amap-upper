@@ -95,6 +95,8 @@ function moveGroup(AMapU) {
 
     speed = speed || moveGroup.speed;
     moveGroup.marker.moveAlong(moveGroup.path, moveGroup.speed);
+
+    return moveGroup;
   };
 
   AMapU.prototype.pauseMarkerMove = function(type) {
