@@ -55,7 +55,6 @@ class MapLoader {
 
 let mapLoaderInstance = null;
 function load(loaderOptions) {
-  console.log('asdf');
   if (!mapLoaderInstance) {
     mapLoaderInstance = new MapLoader(loaderOptions);
   }
@@ -74,8 +73,6 @@ function hasFunction(declaration) {
 }
 
 function install(plugins) {
-  // eslint-disable-next-line no-debugger
-  debugger;
   if (!isObject(plugins)) {
     throw Error('plugins must be a Object!');
   }
@@ -86,7 +83,6 @@ function install(plugins) {
     console.warn('no function installed to amap-upper!');
   }
 
-  console.dir(MapUpper);
   for (let i = 0; i < functionDeclarations.length; i++) {
     const declaration = functionDeclarations[i];
     if (hasFunction(declaration)) {
@@ -96,7 +92,6 @@ function install(plugins) {
 
     MapUpper.prototype[declaration] = plugins[declaration];
   }
-  console.dir(MapUpper);
 
 }
 export default { load, initMap, install };

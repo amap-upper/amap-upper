@@ -15,7 +15,6 @@ export function _buildMarkers(offset = 0, {
     icons[iconName] = new AMap.Icon(icon);
   });
 
-  console.log(icons);
   initIcon = initIcon || (markerStyles[0] && markerStyles[0].iconName);
 
   const markers = data.map((item, index) => {
