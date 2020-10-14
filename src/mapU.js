@@ -4,6 +4,7 @@ import massMarks from './modules/massMarks';
 import markerClusterer from './modules/markerClusterer';
 import markerMove from './modules/markerMove';
 import drawEditor from './modules/drawEditor';
+import infoWindow from './modules/infoWindow';
 
 class MapUpper {
   constructor(options) {
@@ -37,5 +38,6 @@ massMarks(MapUpper);
 markerClusterer(MapUpper);
 markerMove(MapUpper);
 drawEditor(MapUpper);
+infoWindow(MapUpper);
 
 export default MapUpper;
