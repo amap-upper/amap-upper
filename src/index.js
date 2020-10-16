@@ -4,13 +4,19 @@ import MapUpper from './mapU';
 import { isObject } from './utils/index';
 
 class MapLoader {
-  constructor(loaderOptions) {
+  constructor(loaderOptions = {}) {
+
     // 定义初始化状态常量
     this.PENDING = 'pending';// 地图api加载中
     this.FULFILLED = 'fulfilled';// 地图API加载成功
     this.REJECTED = 'rejected';// 地图API 加载失败
 
     this.status = this.PENDING;
+
+    if (AMap) {
+      this.status = this.FULFILLED;
+      return;
+    }
 
     // 存放initMap
     this.onFulfillInitMaps = [];
@@ -36,6 +42,7 @@ class MapLoader {
       this.status = this.FULFILLED;
       this.onFulfillInitMaps.forEach(fn => fn());
     });
+
   }
 
   initMap(options, mapDoneCallback) {
@@ -62,8 +69,11 @@ function load(loaderOptions) {
 }
 
 function initMap(options, mapDoneCallback) {
+  if (AMap) {
+    mapLoaderInstance = new MapLoader();
+  }
   if (!mapLoaderInstance) {
-    throw Error('You must execute load before executing initMap');
+    throw Error('You must   execute amapUpper.load   or   load AMap by script tag   before executing initMap');
   }
   mapLoaderInstance.initMap(options, mapDoneCallback);
 }

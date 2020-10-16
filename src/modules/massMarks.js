@@ -73,7 +73,7 @@ export default function(AMapU) {
 
       this.oldClickMassData = e.data;
       setTimeout(() => {
-        this.renderMassMarks(type);
+        this.renderMassMarksByType(type);
       });
     });
     mass.setMap(this.map);
