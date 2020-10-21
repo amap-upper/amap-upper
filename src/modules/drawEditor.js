@@ -1,16 +1,18 @@
+export const polyDefaultStyle = {
+  strokeColor: '#4169E1',
+  strokeOpacity: 1,
+  strokeWeight: 4,
+  // 折线样式还支持 'dashed'
+  strokeStyle: 'dashed',
+  fillColor: 'rgba(17,193,252,0.3)',
+  // strokeStyle是dashed时有效
+  strokeDasharray: [10, 5],
+  lineJoin: 'round',
+  lineCap: 'round',
+  zIndex: 50
+};
+
 function drawEditor(AMapU) {
-  const defaultStyle = {
-    strokeColor: '#4169E1',
-    strokeOpacity: 1,
-    strokeWeight: 4,
-    // 折线样式还支持 'dashed'
-    strokeStyle: 'dashed',
-    // strokeStyle是dashed时有效
-    strokeDasharray: [10, 5],
-    lineJoin: 'round',
-    lineCap: 'round',
-    zIndex: 50
-  };
 
   let mouseing = false;
   AMapU.prototype.mouseToolDraw = function(
@@ -53,7 +55,7 @@ function drawEditor(AMapU) {
     }.bind(this));
 
     this.mouseTool[type]({
-      ...defaultStyle,
+      ...polyDefaultStyle,
       ...styleOption
     });
   };
@@ -62,6 +64,7 @@ function drawEditor(AMapU) {
   AMapU.prototype.newPolyEditor = function({
     type,
     path,
+    source,
     clearLast = true,
     styleOption = {},
     editorStartCallback,
@@ -85,7 +88,6 @@ function drawEditor(AMapU) {
       this.lastEditorPolys
         ? this.lastEditorPolys.push(poly)
         : this.lastEditorPolys = [poly];
-      poly.setMap(this.map);
 
       // 缩放地图到合适的视野级别
       this.map.setFitView([poly]);
@@ -103,24 +105,27 @@ function drawEditor(AMapU) {
       editorStartCallback && editorStartCallback(this.polyEditor);
     };
 
-    if (path) {
+    if (source) {
+      fn(source);
+    } else if (path) {
       let poly = null;
       if (type === 'polyline') {
         poly = new AMap.Polyline({
           path,
-          ...defaultStyle,
+          ...polyDefaultStyle,
           ...styleOption
         });
       } else if (type === 'polygon') {
         poly = new AMap.Polygon({
           path,
-          ...defaultStyle,
+          ...polyDefaultStyle,
           ...styleOption
         });
       }
+      poly.setMap(this.map);
       fn(poly);
     } else {
-      this.mouseToolDraw({type, styleOption, clearPoly: true, callback: fn});
+      this.mouseToolDraw({type, styleOption, clearPoly: false, callback: fn});
     }
   };
 }

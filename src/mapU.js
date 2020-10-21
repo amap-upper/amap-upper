@@ -5,6 +5,7 @@ import markerClusterer from './modules/markerClusterer';
 import markerMove from './modules/markerMove';
 import drawEditor from './modules/drawEditor';
 import infoWindow from './modules/infoWindow';
+import polygon from './modules/polygon';
 
 class MapUpper {
   constructor(options) {
@@ -39,5 +40,6 @@ markerClusterer(MapUpper);
 markerMove(MapUpper);
 drawEditor(MapUpper);
 infoWindow(MapUpper);
+polygon(MapUpper);
 
 export default MapUpper;
