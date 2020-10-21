@@ -58,6 +58,13 @@ function drawEditor(AMapU) {
       ...polyDefaultStyle,
       ...styleOption
     });
+
+    function stop() {
+      mouseing = false;
+      this.mouseTool && this.mouseTool.close(true);
+    }
+
+    return stop.bind(this);
   };
 
   // let editing = false;
@@ -125,7 +132,7 @@ function drawEditor(AMapU) {
       poly.setMap(this.map);
       fn(poly);
     } else {
-      this.mouseToolDraw({type, styleOption, clearPoly: false, callback: fn});
+      return this.mouseToolDraw({type, styleOption, clearPoly: false, callback: fn});
     }
   };
 }
