@@ -49,7 +49,7 @@ export function _buildMarkers(offset = 0, {
     };
 
     clickCallback && marker.on('click', e => {
-      this.oldClickMarker && setLastIcon && this.oldClickMarker.setIcon(this.oldClickMarker._u_lastIcon);
+      this.oldClickMarker?._u_lastIcon && setLastIcon && this.oldClickMarker.setIcon(this.oldClickMarker._u_lastIcon);
 
       clickCallback(e, this.oldClickMarker, icons);
 
